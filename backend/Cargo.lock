@@ -60,6 +60,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.100"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a23eb6b1614318a8071c9b2521f36b424b2c83db5eb3a0fead4a6c0809af6e61"
+
+[[package]]
 name = "argon2"
 version = "0.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -328,12 +334,14 @@ dependencies = [
 name = "axum_full_backend"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "argon2",
  "async-trait",
  "axum",
  "axum-extra",
  "chrono",
  "dotenv",
+ "hostname 0.3.1",
  "jsonwebtoken",
  "lettre",
  "serde",
@@ -343,6 +351,7 @@ dependencies = [
  "tokio",
  "tower",
  "tower-http",
+ "tracing",
  "tracing-subscriber",
  "uuid",
  "validator",
@@ -1011,6 +1020,17 @@ dependencies = [
 
 [[package]]
 name = "hostname"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3c731c3e10504cc8ed35cfe2f1db4c9274c3d35fa486e3b31df46f068ef3e867"
+dependencies = [
+ "libc",
+ "match_cfg",
+ "winapi",
+]
+
+[[package]]
+name = "hostname"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f9c7c7c8ac16c798734b8a24560c1362120597c40d5e1459f09498f8f6c8f2ba"
@@ -1370,7 +1390,7 @@ dependencies = [
  "email_address",
  "fastrand 2.3.0",
  "futures-util",
- "hostname",
+ "hostname 0.4.0",
  "httpdate",
  "idna 1.0.3",
  "mime",
@@ -1447,6 +1467,12 @@ checksum = "30bde2b3dc3671ae49d8e2e9f044c7c005836e7a023ee57cffa25ab82764bb9e"
 dependencies = [
  "value-bag",
 ]
+
+[[package]]
+name = "match_cfg"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ffbee8634e0d45d258acb448e7eaab3fce7a0a467395d4d9f228e3c1f01fb2e4"
 
 [[package]]
 name = "matchit"

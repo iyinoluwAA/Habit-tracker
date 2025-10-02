@@ -180,3 +180,65 @@ pub struct ResetPasswordRequestDto {
     )]
     pub new_password_confirm: String,
 }
+/* ---------------------------
+   Transcription DTOs
+   --------------------------- */
+/// Body for POST /api/transcribe
+#[derive(Validate, Debug, Clone, Serialize, Deserialize)]
+pub struct EnqueueTranscriptionDto {
+    #[validate(length(min = 1, message = "sourceUrl is required"))]
+    #[serde(rename = "sourceUrl")]
+    pub source_url: String,
+
+    /// optional priority (higher = run earlier)
+    #[serde(default)]
+    pub priority: Option<i32>,
+}
+
+/// Response after enqueue
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct EnqueueResponseDto {
+    pub status: &'static str,
+    pub id: String,
+}
+
+/// Public DTO for a transcription job
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TranscriptionJobDto {
+    pub id: String,
+    #[serde(rename = "userId", skip_serializing_if = "Option::is_none")]
+    pub user_id: Option<String>,
+    #[serde(rename = "sourceUrl")]
+    pub source_url: String,
+    pub status: String,
+    pub attempts: i32,
+    #[serde(rename = "maxAttempts")]
+    pub max_attempts: i32,
+    #[serde(rename = "workerId", skip_serializing_if = "Option::is_none")]
+    pub worker_id: Option<String>,
+    #[serde(rename = "startedAt", skip_serializing_if = "Option::is_none")]
+    pub started_at: Option<DateTime<Utc>>,
+    #[serde(rename = "finishedAt", skip_serializing_if = "Option::is_none")]
+    pub finished_at: Option<DateTime<Utc>>,
+    #[serde(rename = "lastError", skip_serializing_if = "Option::is_none")]
+    pub last_error: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub transcript: Option<String>,
+    #[serde(rename = "transcriptFormat", skip_serializing_if = "Option::is_none")]
+    pub transcript_format: Option<String>,
+    #[serde(rename = "durationSeconds", skip_serializing_if = "Option::is_none")]
+    pub duration_seconds: Option<i32>,
+    #[serde(rename = "sizeBytes", skip_serializing_if = "Option::is_none")]
+    pub size_bytes: Option<i64>,
+    #[serde(rename = "createdAt")]
+    pub created_at: DateTime<Utc>,
+    #[serde(rename = "updatedAt")]
+    pub updated_at: DateTime<Utc>,
+}
+
+/// Response for GET /api/transcribe/:id
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TranscriptionStatusResponseDto {
+    pub status: &'static str,
+    pub job: Option<TranscriptionJobDto>,
+}
